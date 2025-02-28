@@ -7,7 +7,11 @@ monsterSprite.src = "../../assets/glooRotated.png";
 canvas.width = canvasSize;
 canvas.height = canvasSize;
 canvas.style.border = "2px solid black";
-type MapInfo = { start: { x: number; y: number }; end: { x: number; y: number }; totalTiles: number };
+type MapInfo = {
+  start: { x: number; y: number };
+  end: { x: number; y: number };
+  totalTiles: number;
+};
 let last = 0;
 
 const map: number[][] = [
@@ -23,7 +27,11 @@ const map: number[][] = [
   [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
-const mapInfo: MapInfo = { start: { x: 0, y: 0 }, end: { x: 0, y: 0 }, totalTiles: 0 };
+const mapInfo: MapInfo = {
+  start: { x: 0, y: 0 },
+  end: { x: 0, y: 0 },
+  totalTiles: 0,
+};
 
 (function () {
   for (let row = 0; row < map.length; row++) {
@@ -69,7 +77,14 @@ function BFS() {
     for (const { dx, dy } of directions) {
       const newX = current.x + dx;
       const newY = current.y + dy;
-      if (newX >= 0 && newY >= 0 && newX < map[0].length && newY < map.length && map[newY][newX] !== 0 && !visited.has(`${newX},${newY}`)) {
+      if (
+        newX >= 0 &&
+        newY >= 0 &&
+        newX < map[0].length &&
+        newY < map.length &&
+        map[newY][newX] !== 0 &&
+        !visited.has(`${newX},${newY}`)
+      ) {
         visited.add(`${newX},${newY}`);
         parent[`${newX},${newY}`] = current;
         queue.push({ x: newX, y: newY });
@@ -106,7 +121,17 @@ function animateSprite(deltaTime: number) {
     sprite.time = 0;
   }
   const spriteX = sprite.face.id * 32;
-  ctx.drawImage(monsterSprite, spriteX, 0, 32, 32, sprite.position.x * tile, sprite.position.y * tile, tile, tile);
+  ctx.drawImage(
+    monsterSprite,
+    spriteX,
+    0,
+    32,
+    32,
+    sprite.position.x * tile,
+    sprite.position.y * tile,
+    tile,
+    tile,
+  );
 }
 
 function drawMap() {
@@ -117,7 +142,11 @@ function drawMap() {
       ctx.strokeRect(col * tile, row * tile, tile, tile);
       ctx.font = "20px Arial";
       ctx.fillStyle = "red";
-      ctx.fillText(col === 0 ? String(col + row) : String(col), col * tile + 20, row * tile + 35);
+      ctx.fillText(
+        col === 0 ? String(col + row) : String(col),
+        col * tile + 20,
+        row * tile + 35,
+      );
     }
   }
 }
